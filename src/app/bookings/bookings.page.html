@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bookings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-item>
+    <ion-input type="text" name="search" (keyup.enter)="filter(search.value)" placeholder="Buscar..."
+               #search></ion-input>
+    <ion-icon name="search" slot="end" (click)="filter(search.value)"></ion-icon>
+  </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-item *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </ion-item>
+  <ion-grid *ngIf="!loading || data.length>0">
+    <ion-row *ngFor="let i of data">
+      <ion-col>
+        <ion-item>
+          {{fields[0].name}}
+        </ion-item>
+        <ion-item>
+          {{i.bookingId}}
+        </ion-item>
+        <ion-item>
+          {{fields[1].name}}
+        </ion-item>
+        <ion-item>
+          {{i.tutenUserClient.firstName + ' ' + i.tutenUserClient.lastName}}
+        </ion-item>
+
+        <ion-item>
+          {{fields[2].name}}
+        </ion-item>
+        <ion-item>
+          {{i.bookingTime | date:'dd-MM-yyyy'}}
+        </ion-item>
+        <ion-item>
+          {{fields[3].name}}
+        </ion-item>
+        <ion-item>
+          {{i.locationId.streetAddress}}
+        </ion-item>
+        <ion-item>
+          {{fields[4].name}}
+        </ion-item>
+        <ion-item>
+          {{i.bookingPrice | currency}}
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+  <ion-item *ngIf="data.length<=0">
+    No hay datos disponible...
+  </ion-item>
+
+</ion-content>

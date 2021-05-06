@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #loginForm="ngForm" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked" color="primary">Username</ion-label>
+        <ion-input [(ngModel)]="login.email" name="email" type="text" #email="ngModel" spellcheck="false"
+                   autocapitalize="off"
+                   required>
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger">
+        <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
+          Username is required
+        </p>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="stacked" color="primary">Password</ion-label>
+        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger">
+        <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
+          Password is required
+        </p>
+      </ion-text>
+    </ion-list>
+
+    <ion-row>
+      <ion-col *ngIf="!loading">
+        <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
+      </ion-col>
+      <ion-col *ngIf="loading">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+
+    </ion-row>
+    <ion-row *ngIf="errorMessage.length>0">
+      <ion-col>
+        {{errorMessage}}
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
